@@ -100,6 +100,8 @@ def matchups(yearstart, yearend, batter, bowler, phase):
             rpi = []
             avg = []
             six = []
+            four=[]
+            bpb=[]
             
             for i in batsman:
                 df4 = df3[(df3["striker"] == i)]
@@ -111,15 +113,24 @@ def matchups(yearstart, yearend, batter, bowler, phase):
                 rpi.append((df4["runs_off_bat"].sum()) / (len(df4["match_id"].unique())))
                 avg.append((df4["runs_off_bat"].sum()) / (len(df4[(df4.player_dismissed == i)])))
                 six.append((df4["runs_off_bat"].apply(lambda x: 1 if x == 6 else 0).sum()))
-
+                four.append((df4["runs_off_bat].apply(lambda x: 1 if x==4 else 0).sum()))
+                bpb.append(100*(df4["balls"].count())/((df4["runs_off_bat"].apply(lambda x: 1 if x == 6 else 0).sum())+(df4["runs_off_bat].apply(lambda x: 1 if x==4 else 0.sum())))
+                                                                                                                   
+                                                                                                                   
+                    
+                             
+                             
             d["Striker"] = striker
             d["Runs"] = runs
             d["Balls"] = balls
             d["SR"] = sr
             d["6s"] = six
-            d["Outs"] = outs
+            d["4s"]=four
+            d["bpb"]=bpb
             d["Rpi"] = rpi
             d["Avg"] = avg
+            d["Outs"] = outs
+            
             
             dfn = pd.DataFrame(d)
             
