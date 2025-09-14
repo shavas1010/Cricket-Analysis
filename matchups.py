@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore")
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_csv(r"data/allipl.csv")
+        df = pd.read_csv("data/allipl.csv")
         df["match_date"] = pd.to_datetime(df["start_date"])
         df["year"] = df["match_date"].dt.year
         df = df.sort_values(by=["match_id", "innings", "ball"])
