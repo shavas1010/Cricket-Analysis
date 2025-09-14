@@ -33,7 +33,7 @@ def load_data():
         df1 = df1.replace(np.nan, 0)
         return df1
     except FileNotFoundError:
-        st.error("Error: The CSV file 'allipl.csv' was not found. Please check the file path.")
+        
         st.stop()
 
 df1 = load_data()
