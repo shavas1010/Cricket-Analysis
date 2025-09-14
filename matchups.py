@@ -114,7 +114,7 @@ def matchups(yearstart, yearend, batter, bowler, phase):
                 avg.append((df4["runs_off_bat"].sum()) / (len(df4[(df4.player_dismissed == i)])))
                 six.append((df4["runs_off_bat"].apply(lambda x: 1 if x == 6 else 0).sum()))
                 four.append((df4["runs_off_bat"].apply(lambda x: 1 if x==4 else 0).sum()))
-                bpb.append(100*(df4["balls"].count())/((df4["runs_off_bat"].apply(lambda x: 1 if x == 6 else 0).sum())+(df4["runs_off_bat"].apply(lambda x: 1 if x==4 else 0.sum())))
+                bpb.append(100*(df4["balls"].count())/((df4["runs_off_bat"].apply(lambda x: 1 if x == 6 else 0).sum())+(df4["runs_off_bat"].apply(lambda x: 1 if x==4 else 0).sum())))
                                                                                                                    
                                                                                                                    
                     
