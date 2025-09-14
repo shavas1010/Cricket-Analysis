@@ -126,10 +126,10 @@ def matchups(yearstart, yearend, batter, bowler, phase):
             d["SR"] = sr
             d["6s"] = six
             d["4s"]=four
-            d["bpb"]=bpb
-            d["Rpi"] = rpi
-            d["Avg"] = avg
-            d["Outs"] = outs
+            d["BPB"]=bpb
+            d["RPI"] = rpi
+            d["AVG"] = avg
+            d["Dismissals"] = outs
             
             
             dfn = pd.DataFrame(d)
@@ -137,10 +137,10 @@ def matchups(yearstart, yearend, batter, bowler, phase):
             meansr = dfn["SR"].mean()
             stdsr = dfn["SR"].std()
             dfn["zscore_sr"] = (dfn["SR"] - meansr) / stdsr
-            dfn["zscore_rpi"] = (dfn["Rpi"] - (dfn["Rpi"].mean())) / (dfn["Rpi"].std())
+            dfn["zscore_rpi"] = (dfn["RPI"] - (dfn["RPI"].mean())) / (dfn["RPI"].std())
             dfn["matchup_score"] = dfn["zscore_sr"] + dfn["zscore_rpi"]
             dfn["matchup_score"] = (dfn["matchup_score"] - dfn["matchup_score"].mean()) / (dfn["matchup_score"].std())
-            dfn['Percentile Rank'] = dfn['matchup_score'].rank(pct=True)
+            dfn['Percentile Rank'] = 100*(dfn['matchup_score'].rank(pct=True))
             dfn = dfn.sort_values(by=["Percentile Rank"], ascending=False).reset_index(drop=True, inplace=False)
             
             # Display results in Streamlit
@@ -149,6 +149,10 @@ def matchups(yearstart, yearend, batter, bowler, phase):
             
             # Find and display the specific row for the selected batsman
             result_df = dfn[dfn["Striker"] == batter].copy()
+            st.info("BPB - Balls per boundary")
+            
+            st.info("RPI - Runs per innings (like avg to avoid infinite val incase of no dimissal)")
+            st.info("Percentile Rank - indicating the percentage of batsmen who have faced the same bowler that fall at or below a specific value - Eg: if a person is in the 80th percentile for height, it means their height is greater than or equal to 80% of the people in that group")
             
             if not result_df.empty:
                 st.dataframe(result_df)
